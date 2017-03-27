@@ -1,0 +1,17 @@
+{
+  "name": "node-socket-chat",
+  "version": "1.0.0",
+  "description": "chat app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "engines": {
+    "node": "7.7.4"
+  },
+  "author": "Min Soo Kim",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}

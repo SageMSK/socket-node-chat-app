@@ -13,7 +13,8 @@ const { generateMessage } = require('./utils/message');
 app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
-  console.log('New user connected.');
+  console.log('New user connected. Nodejs');
+
 
   socket.emit('newMessage', generateMessage('Admin', 'Welcome to the Chat App'));
   socket.broadcast.emit('newMessage', generateMessage('Admin', 'New User Joined'));
@@ -22,13 +23,10 @@ io.on('connection', (socket) => {
     io.emit('newMessage', generateMessage(message.from, message.message));
   });
 
-  socket.on('createMessage', message => {
+  socket.on('createMessage', (message, callback) => {
     console.log('createMessage', message);
-    io.emit('newMessage', {
-      from: message.from,
-      message: message.message,
-      createdAt: new Date().getTime()
-    });
+    io.emit('newMessage', generateMessage(message.from, message.message));
+    callback('This is from the server');
   });
 
   socket.on('disconnect', () => {

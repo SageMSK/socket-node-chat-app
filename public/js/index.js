@@ -1,4 +1,21 @@
 $(document).ready(function () {
+
+  function scrollToBottom (argument) {
+    // Selectors
+    let messages = $('#messages');
+    let newMessage = messages.children('li:last-child');
+    // Heights
+    let clientHeight = messages.prop('clientHeight');
+    let scrollTop = messages.prop('scrollTop');
+    let scrollHeight = messages.prop('scrollHeight');
+    let newMessageHeight = newMessage.innerHeight();
+    let lastMessageHeight = newMessage.prev().innerHeight();
+
+    if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+      messages.scrollTop(scrollHeight);
+    }
+  }
+
   const socket = io();
 
   socket.on('connect', function () {
@@ -19,6 +36,7 @@ $(document).ready(function () {
     });
 
     $('#messages').append(html);
+    scrollToBottom();
   });
 
   socket.on('newLocationMessage', function (message) {
@@ -31,6 +49,7 @@ $(document).ready(function () {
     });
 
     $('#messages').append(html);
+    scrollToBottom();
   });
 
 
@@ -69,5 +88,6 @@ $(document).ready(function () {
       alert('Unable to fetch location.'); // Need permission
     });
   });
+
 
 });
